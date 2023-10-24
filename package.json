@@ -1,48 +1,51 @@
 {
   "name": "react-week-time-range-picker",
-  "version": "1.11.4",
+  "version": "1.11.5",
   "description": "",
-  "main": "react-week-time-range-picker.js",
-  "types": "./src/react-app.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline",
-    "build": "webpack --display-error-details --config webpack.config.js"
+    "clean": "rm -rf dist",
+    "build": "npm run build:js && npm run build:types",
+    "build:js": "rollup -c",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist"
   },
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lizhongzhen11/react-week-time-range-picker.git"
+    "url": "git+https://github.com/xerenahmed/react-week-time-range-picker.git"
   },
   "keywords": [
     "time-range-picker"
   ],
-  "author": "lizhongzhen11",
+  "author": "xerenahmed",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lizhongzhen11/react-week-time-range-picker/issues"
+    "url": "https://github.com/xerenahmed/react-week-time-range-picker/issues"
   },
-  "homepage": "https://github.com/lizhongzhen11/react-week-time-range-picker#readme",
+  "homepage": "https://github.com/xerenahmed/react-week-time-range-picker#readme",
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@types/node": "^12.7.8",
+    "@types/node": "^16",
     "@types/react": "^16.9.3",
     "@types/react-dom": "^16.9.1",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.2.0",
-    "html-webpack-plugin": "^3.2.0",
     "less": "^3.10.3",
-    "less-loader": "^5.0.0",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "style-loader": "^1.0.0",
-    "ts-loader": "^6.1.2",
-    "typescript": "^3.6.3",
-    "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "typescript": "^4",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.4",
+    "postcss": "^8.4.14",
+    "postcss-modules": "^4.3.1",
+    "rollup": "^2.77.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "typescript-plugin-css-modules": "^3.4.0"
   },
   "dependencies": {},
-  "peerDeependencies": {
+  "peerDependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }

@@ -41,9 +41,9 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
   }
 
   /**
-   * @desc mousedown事件时记录下对应的起始时间数据
-   *       头条是根据起始点来确定选中或者取消选中的，所以应先判断起始点是否处于选中状态，
-   *       如果是则框选范围内的时间全部取消选中，否则全部选中。
+   * @desc Record the corresponding start time data during the mousedown event.
+   *       The logic here is based on the starting point to determine whether to select or deselect. Therefore, it should first check if the starting point is in a selected state.
+   *       If it is, then all times within the box selection range will be deselected. Otherwise, they will all be selected.
    */
   const handleMousedown = (e) => {
     e.preventDefault()
@@ -95,9 +95,9 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
     handleDrag(dragData)
   }
   /**
-   * @desc 处理数据 移入/移出 cacheChecked。
-   *       1.需要判断cacheChecked中该日期是否已存在该hour，若没有需要加入，否则删除
-   *       2.需要判断cacheChecked中是否已存在该iden，若没有需要加入，若存在但是该iden中的hour全部取消选中则删除该iden
+   * @desc Process data when moving in/out of cacheChecked.
+   *       1. Need to check if the hour already exists for that date in cacheChecked. If not, add it; otherwise, remove it.
+   *       2. Need to check if the iden (day of the week) already exists in cacheChecked. If not, add it; if it exists but all hours in that iden are deselected, then remove that iden.
    */
   const handleData = (iden, hour) => {
     let cacheChecked = checkedDatas
@@ -136,13 +136,13 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
     }
     return false
   }
-  // 清除缓存的cacheStart和cacheEnd
+  // Clear cached cacheStart and cacheEnd
   const clearCache = (key) => {
     cach[key].iden = ''
     cach[key].hour = ''
     cach[key].group = ''
   }
-  // 清空所有数据
+  // Clear all data
   const handleEmpty = () => {
     hasStart = false
     clearCache('cacheStart')
@@ -150,11 +150,11 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
     setCheckedDatas([])
   }
   /**
-   * @desc 鉴于click和mousedown时都需要遍历数组去确定当前时间是否已经存在，所以抽出公共代码
-   *       返回的值：
-   *       has: 判断cacheChecked中是否存在该iden，即周一至周日的某天
-   *       idenIndex: 该iden在cacheChecked中下标，
-   *       index：该hour在cacheChecked中对应日期中的下标
+   * @desc Given that both click and mousedown require iterating through the array to determine if the current time already exists, common code is extracted.
+   *       The returned values:
+   *       has: Check if the iden (day of the week from Monday to Sunday) exists in cacheChecked.
+   *       idenIndex: The index of the iden in cacheChecked.
+   *       index: The index of the hour corresponding to the date in cacheChecked.
    */
   const isHasStart = (iden, hour?: string) => {
     hasStart = false

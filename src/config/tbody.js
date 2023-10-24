@@ -1,31 +1,31 @@
 export const weeks = [
   {
     iden: '0',
-    week: '星期一'
+    week: 'Pazartesi'
   },
   {
     iden: '1',
-    week: '星期二'
+    week: 'Salı'
   },
   {
     iden: '2',
-    week: '星期三'
+    week: 'Çarşamba'
   },
   {
     iden: '3',
-    week: '星期四'
+    week: 'Perşembe'
   },
   {
     iden: '4',
-    week: '星期五'
+    week: 'Cuma'
   },
   {
     iden: '5',
-    week: '星期六'
+    week: 'Cumartesi'
   },
   {
     iden: '6',
-    week: '星期日'
+    week: 'Pazar'
   }
 ]
 

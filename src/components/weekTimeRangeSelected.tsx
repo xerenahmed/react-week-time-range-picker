@@ -5,9 +5,9 @@ import { SelectedProps } from '../interface'
 import { weekMaps } from '../config/tbody.js'
 
 /**
- * @desc 对被选中的日期排序，
- *       按iden排：星期一 ~ 星期日
- *       按time排：00:00~23:00
+ * @desc Sort the selected dates,
+ *       Sort by iden: Monday ~ Sunday
+ *       Sort by time: 00:00 ~ 23:00
  */
 const sort = (curr, next) => {
   if (curr.iden) {
@@ -21,9 +21,9 @@ const sort = (curr, next) => {
 }
 
 /**
-   * @desc 合并times，将 [00:00, 01:00, 02:00]等不间隔的时间段合并
-   *       如果带半小时，那么就需要 [00:00, 00:30, 01:00] 才能合并成[00:00, 01:00]
-   */
+ * @desc Merge times, combining non-continuous time periods like [00:00, 01:00, 02:00]
+ *       If there are half-hour intervals, then [00:00, 00:30, 01:00] need to be combined into [00:00, 01:00]
+ */
 const handleMergeTimes = (hasHalfHour, times) => {
   let mergeTimes = [[times[0]]]
   hasHalfHour ? handleMergeHalfHour(times, mergeTimes) : handleMergeHour(times, mergeTimes)
@@ -98,10 +98,10 @@ const WeekTimeRangeSelected: React.FunctionComponent<SelectedProps> = (props: Se
         <div className="wtrp-clearfix">
           {
             checkedDatas.length === 0 ? 
-              <span className="wtrp-fl tip-text">可拖动鼠标选择时间段</span> :
-              <span className="wtrp-fl tip-text">已选择时间段</span>
+              <span className="wtrp-fl tip-text">Zaman aralığını seçmek için fareyi sürükleyin</span> :
+              <span className="wtrp-fl tip-text">Seçilen zaman dilimi</span>
           }
-          <a className="wtrp-fr" onClick={handleClear}>清空选择</a>
+          <a className="wtrp-fr" onClick={handleClear}>Seçimi Temizle</a>
         </div>
         {
           cacheChecked.map((item, i) => {

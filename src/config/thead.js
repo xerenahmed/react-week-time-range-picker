@@ -1,4 +1,4 @@
-export const theadFirstTd = '星期/时间'
+export const theadFirstTd = 'Gün / Saat'
 
 export const theadTimeRange = ['00:00 - 12:00', '12:00 - 24:00']
 
