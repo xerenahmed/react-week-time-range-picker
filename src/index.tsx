@@ -20,7 +20,7 @@ let currentVal = '' // Cache the concatenated string of the current day and hour
 let nextTime = '' // Cache the next time of the current time, for example, if the current time is at 00:00, the next moment should be 00:30 or 01:00 (depending on whether hasHalfHour is determined)
 
 const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePickerProps> = (props: ReactWeekTimeRangePickerProps) => {
-  const [isDrag, setIsDrag] = useState(false) // 控制拖拽框显影
+  const [isDrag, setIsDrag] = useState(true) // 控制拖拽框显影
   const [top, setTop] = useState(0)
   const [left, setLeft] = useState(0)
   const [width, setWidth] = useState(0)
@@ -81,33 +81,37 @@ const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePicker
         handleDragMove({ isDrag, layerX, layerY, tempWidth, tempHeight, iden, hour, value })
   }
   // 按下
-  const handleDragDown = ({ clientX, clientY, layerX, layerY, iden, tdIndex }) => {
+  const handleDragDown = (params) => {
+    const { clientX, clientY, layerX, layerY, iden, tdIndex } = params;
     setWidth(0)
     setHeight(0)
     setIsDrag(true)
     startX = clientX
     startY = clientY
-    topY = layerY - iden * 20 - 40
-    leftX = layerX - tdIndex * 24 - 60
-    startLayerX = tdIndex * 24 + 60
-    startLayerY = (~~iden * 20) + 40
+    topY = layerY - iden * 32 - 80
+    leftX = layerX - tdIndex * 32 - 96
+    startLayerX = tdIndex * 32 + 140
+    startLayerY = (~~iden * 32) + 80
     isFocus = false
     setTop(startY - topY)
     setLeft(startX - leftX)
   }
   // 可能是普通移动，也可能是拖拽移动
-  const handleDragMove = ({ isDrag, layerX, layerY, tempWidth, tempHeight, iden, hour, value }) => {
+  const handleDragMove = (params) => {
+    let { isDrag, layerX, layerY, tempWidth, tempHeight, iden, hour, value } = params;
     if (isDrag) {
       let diffX = layerX - startLayerX
       let diffY = layerY - startLayerY
-      tempWidth = diffX > 0 ? diffX : 24 - diffX
-      tempHeight = diffY > 0 ? diffY : 20 - diffY
-      const newWidth = tempWidth % 20 === 0 && diffX > 0 ? Math.ceil(tempWidth / 24) * 24 + 1 : Math.ceil(tempWidth / 24) * 24
-      const newHeight = tempHeight % 20 === 0 && diffY > 0 ? Math.ceil(tempHeight / 20) * 20 + 20 : Math.ceil(tempHeight / 20) * 20
+
+      tempWidth = diffX > 0 ? diffX : 20 - diffX
+      tempHeight = diffY > 0 ? diffY : 40 - diffY
+
+      const newWidth = tempWidth % 32 === 0 && diffX > 0 ? Math.ceil(tempWidth / 40) * 40 + 1 : Math.ceil(tempWidth / 32) * 36
+      const newHeight = tempHeight % 40 === 0 && diffY > 0 ? Math.ceil(tempHeight / 40) * 40 + 40 : Math.ceil(tempHeight / 40) * 40
       setWidth(newWidth)
       setHeight(newHeight)
-      diffX < 0 ? setLeft(startX - leftX - width + 24) : setLeft(startX - leftX)
-      diffY < 0 ? setTop(startY - topY - height + 20) : setTop(startY - topY)
+      diffX < 0 ? setLeft(startX - leftX - width + 60) : setLeft(startX - leftX)
+      diffY < 0 ? setTop(startY - topY - height + 40) : setTop(startY - topY)
     }
     isFocus = true
     // setIsFocus(true)
@@ -131,7 +135,7 @@ const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePicker
   //   const minute = ~~time.substring(3)
   //   currentVal = value
   //   //  const tableHeight = this.$refs.table.clientHeight
-  //   //  popperTop = (~~iden + 1) * 20 + 40 - tableHeight - 55
+  //   //  popperTop = (~~iden + 1) * 40 + 80 - tableHeight - 55
   //   // Only hours
   //    if (!hasHalfHour) {
   //      nextTime = hour + 1 >= 10 ? `${hour + 1}:00` : `0${hour + 1}:00`
@@ -146,7 +150,21 @@ const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePicker
   //    nextTime = time.substring(0, 2) + ':30'
   //    popperLeft = (hour * 2 - 1) * 24 + 13
   //  }
-
+  
+//   useEffect(() => {
+//     handleDragDown(
+//
+//       {
+//     "clientX": 332,
+//     "clientY": 117,
+//     "layerX": 100,
+//     "layerY": 85,
+//     "iden": "0",
+//     "tdIndex": 0
+// }
+//     )
+//   }, [])
+  console.log(isDrag, left, top, width, height)
   return (
     <div className="week-time-range-picker">
       {/* Drag and drop box */}

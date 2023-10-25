@@ -10,6 +10,7 @@ import { weekMaps } from '../config/tbody.js'
  *       Sort by time: 00:00 ~ 23:00
  */
 const sort = (curr, next) => {
+  // TODO: curr undefined
   if (curr.iden) {
     return curr.iden - next.iden
   }
@@ -73,6 +74,9 @@ const handleMergeHalfHour = (times, mergeTimes) => {
 
 // 如果是只有小时的话，需要处理下
 const fromat = (last) => {
+  if (!last) {
+    return 'null';
+  }
   const hour = ~~last.substring(0, 2) + 1
   return hour > 9 ? `${hour}:00` : `0${hour}:00`
 }
