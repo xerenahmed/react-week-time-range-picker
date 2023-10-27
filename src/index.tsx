@@ -20,7 +20,7 @@ let currentVal = '' // Cache the concatenated string of the current day and hour
 let nextTime = '' // Cache the next time of the current time, for example, if the current time is at 00:00, the next moment should be 00:30 or 01:00 (depending on whether hasHalfHour is determined)
 
 const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePickerProps> = (props: ReactWeekTimeRangePickerProps) => {
-  const [isDrag, setIsDrag] = useState(true) // 控制拖拽框显影
+  const [isDrag, setIsDrag] = useState(false) // 控制拖拽框显影
   const [top, setTop] = useState(0)
   const [left, setLeft] = useState(0)
   const [width, setWidth] = useState(0)
@@ -118,6 +118,10 @@ const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePicker
     // tipPosition(iden, hour, value)
   }
 
+  useEffect(() => {
+    setCacheChecked(props.selectedData)
+  }, [props.selectedData])
+
   /**
    * @param {string} iden The day of the week where the current td is located
    * @param {string} tdIndex The position of the current td in the tr
@@ -164,7 +168,6 @@ const ReactWeekTimeRangePicker: React.FunctionComponent<ReactWeekTimeRangePicker
 // }
 //     )
 //   }, [])
-  console.log(isDrag, left, top, width, height)
   return (
     <div className="week-time-range-picker">
       {/* Drag and drop box */}

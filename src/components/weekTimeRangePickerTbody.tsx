@@ -62,6 +62,7 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
       handleDrag(dragData)
     }
     isHasStart(cach.cacheStart.iden, cach.cacheStart.hour)
+    handleSelect(checkedDatas)
   }
   /**
    * @desc mouseup事件时记录下对应的终点时间数据，同时去计算选中的时间范围
@@ -74,7 +75,6 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
     clearCache('cacheStart')
     clearCache('cacheEnd')
     handleDrag({type: 'up'})
-    handleSelect(checkedDatas)
   }
   const handleMousemove = (e) => {
     if (!e.target.dataset.hour) {
@@ -148,6 +148,7 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
     clearCache('cacheStart')
     clearCache('cacheEnd')
     setCheckedDatas([])
+    handleSelect([])
   }
   /**
    * @desc Given that both click and mousedown require iterating through the array to determine if the current time already exists, common code is extracted.
@@ -191,7 +192,12 @@ const WeekTimeRangePickerTbody: React.FunctionComponent<TbodyProps> = (props: Tb
       handleCheckedData({ cacheChecked, hasStart: tempHasStart, has, idenIndex, iden: dayRange[i], timeRange})
     }
     setCheckedDatas(cacheChecked)
+    handleSelect(cacheChecked)
   }
+
+  useEffect(() => {
+    setCheckedDatas(props.checkedDatas)
+  }, [props.checkedDatas]);
 
   return (
     <tbody className="wtrp-tbody" 

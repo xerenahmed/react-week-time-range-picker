@@ -640,6 +640,7 @@ const WeekTimeRangePickerTbody = (props) => {
             handleDrag(dragData);
         }
         isHasStart(cach.cacheStart.iden, cach.cacheStart.hour);
+        handleSelect(checkedDatas);
     };
     /**
      * @desc mouseup事件时记录下对应的终点时间数据，同时去计算选中的时间范围
@@ -652,7 +653,6 @@ const WeekTimeRangePickerTbody = (props) => {
         clearCache('cacheStart');
         clearCache('cacheEnd');
         handleDrag({ type: 'up' });
-        handleSelect(checkedDatas);
     };
     const handleMousemove = (e) => {
         if (!e.target.dataset.hour) {
@@ -725,6 +725,7 @@ const WeekTimeRangePickerTbody = (props) => {
         clearCache('cacheStart');
         clearCache('cacheEnd');
         setCheckedDatas([]);
+        handleSelect([]);
     };
     /**
      * @desc Given that both click and mousedown require iterating through the array to determine if the current time already exists, common code is extracted.
@@ -761,7 +762,11 @@ const WeekTimeRangePickerTbody = (props) => {
             handleCheckedData({ cacheChecked, hasStart: tempHasStart, has, idenIndex, iden: dayRange[i], timeRange });
         }
         setCheckedDatas(cacheChecked);
+        handleSelect(cacheChecked);
     };
+    useEffect(() => {
+        setCheckedDatas(props.checkedDatas);
+    }, [props.checkedDatas]);
     return (React.createElement("tbody", { className: "wtrp-tbody", onMouseDown: handleMousedown, onMouseUp: handleMouseup, onMouseMove: handleMousemove },
         weeks.map((item, i) => {
             return (React.createElement("tr", { className: "wtrp-tbody-tr", key: i },
@@ -788,7 +793,7 @@ let startLayerY = 0; // Record the distance from the top left corner of the corr
 let topY = 0; // Record the vertical deviation of the boundary when the starting point is clicked
 let leftX = 0; // Record the layerX - the distance from the left side of the td to the left side of the table when the starting point is clicked
 const ReactWeekTimeRangePicker = (props) => {
-    const [isDrag, setIsDrag] = useState(true); // 控制拖拽框显影
+    const [isDrag, setIsDrag] = useState(false); // 控制拖拽框显影
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
     const [width, setWidth] = useState(0);
@@ -870,6 +875,9 @@ const ReactWeekTimeRangePicker = (props) => {
         // setIsFocus(true)
         // tipPosition(iden, hour, value)
     };
+    useEffect(() => {
+        setCacheChecked(props.selectedData);
+    }, [props.selectedData]);
     /**
      * @param {string} iden The day of the week where the current td is located
      * @param {string} tdIndex The position of the current td in the tr
@@ -915,7 +923,6 @@ const ReactWeekTimeRangePicker = (props) => {
     // }
     //     )
     //   }, [])
-    console.log(isDrag, left, top, width, height);
     return (React.createElement("div", { className: "week-time-range-picker" },
         isDrag ?
             React.createElement("div", { className: "wtrp-schedule", style: {
